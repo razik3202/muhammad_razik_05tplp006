@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Manajemen Izin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            background-color: #f0f4f8; /* Softer background color */
+            color: #333;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #007bff; /* Soft blue */
+            color: #fff;
+            position: fixed;
+            height: 100vh;
+            padding: 20px 0;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .sidebar .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .logo img {
+            width: 60%;
+            border-radius: 50%;
+        }
+
+        .sidebar .welcome {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar .welcome img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .sidebar .welcome p {
+            margin: 0;
+            font-size: 0.9em;
+            line-height: 1.2;
+            text-align: left;
+        }
+
+        .sidebar .menu-heading {
+            padding: 10px 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #f8f9fa;
+            margin-top: 20px;
+        }
+
+        .sidebar .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            font-size: 1em;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .sidebar .menu-item:hover {
+            background-color: #0056b2;
+            color: #fff;
+        }
+
+        .sidebar .menu-item.active {
+            background-color: #0056b2; /* Active item background color */
+        }
+
+        .sidebar .menu-item i {
+            margin-right: 10px;
+        }
+
+        /* Content */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .dashboard-header {
+            background-color: #007bff; /* Soft blue */
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff; /* White background for table */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff; /* Header background color */
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1; /* Light gray on row hover */
+        }
+
+        .btn-change-status {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-change-status:hover {
+            background-color: #45a049;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+            padding-top: 60px; 
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"], select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="img/UNPAM_logo1.png" alt="University Logo">
+            <h2>Universitas Pamulang</h2>
+        </div>
+        <div class="welcome">
+            <img src="img/razik1.jpeg" alt="Profile Picture">
+            <p>Welcome, Razik<br><small>Administrator</small></p>
+        </div>
+        <a href="index.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+        <div class="menu-heading">MENU KARYAWAN</div>
+        <a href="karyawan.html" class="menu-item">
+            <i class="fas fa-users"></i>
+            <span>Karyawan</span>
+        </a>
+        <a href="jabatan.html" class="menu-item">
+            <i class="fas fa-briefcase"></i>
+            <span>Jabatan</span>
+        </a>
+        <a href="divisi.html" class="menu-item">
+            <i class="fas fa-sitemap"></i>
+            <span>Divisi</span>
+        </a>
+
+        <div class="menu-heading">MENU ABSENSI</div>
+        <a href="absensi.html" class="menu-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Absensi</span>
+        </a>
+        <a href="izin.html" class="menu-item active">
+            <i class="fas fa-file-alt"></i>
+            <span>Izin</span>
+        </a>
+        <a href="lembur.html" class="menu-item">
+            <i class="fas fa-clock"></i>
+            <span>Lembur</span>
+        </a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1>Sistem Informasi Manajemen Lembur</h1>
+            <p>Admin Dashboard</p>
+        </div>
+
+        <!-- Change Status Button -->
+        <button class="btn-change-status" id="openModal">Ubah Status Lembur</button>
+
+        <!-- Permission Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Tanggal Lembur</th>
+                    <th>Jam</th>
+                    <th>Keterangan</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Razik</td>
+                    <td>2024-11-01</td>
+                    <td>17:00</td>
+                    <td>Penyelesaian laporan</td>
+                    <td>Disetujui</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Kias</td>
+                    <td>2024-11-02</td>
+                    <td>16:40</td>
+                    <td>Penyelesaian Laporan</td>
+                    <td>disetujui</td>
+                </tr>
+               
+              
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal for Changing Status -->
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ubah Status Lembur</h2>
+            <form>
+                <label for="employeeName">Nama Karyawan:</label>
+                <input type="text" id="employeeName" name="employeeName" required>
+
+                <label for="izinType">Jenis Lembur:</label>
+                <input type="text" id="izinType" name="izinType" required>
+
+                <label for="newStatus">Status Baru:</label>
+                <select id="newStatus" name="newStatus">
+                    <option value="disetujui">Disetujui</option>
+                    <option value="ditolak">Ditolak</option>
+                    <option value="menunggu">Menunggu</option>
+                </select>
+
+                <button type="submit" class="btn-change-status">Simpan</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Modal functionality
+            var modal = document.getElementById("statusModal");
+            var btn = document.getElementById("openModal");
+            var span = document.getElementsByClassName("close")[0];
+
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        })();
+    </script>
+
+</body>
+</html>

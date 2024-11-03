@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Manajemen Divisi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            background-color: #f0f4f8; /* Softer background color */
+            color: #333;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #007bff; /* Soft blue */
+            color: #fff;
+            position: fixed;
+            height: 100vh;
+            padding: 20px 0; /* Increased padding for better spacing */
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+
+        .sidebar .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .logo img {
+            width: 60%;
+            border-radius: 50%;
+        }
+
+        .sidebar .welcome {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar .welcome img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px; /* Space between profile picture and text */
+        }
+
+        .sidebar .welcome p {
+            margin: 0;
+            font-size: 0.9em;
+            line-height: 1.2;
+            text-align: left;
+        }
+
+        .sidebar .menu-heading {
+            padding: 10px 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #f8f9fa; /* Lighter heading color */
+            margin-top: 20px; /* Margin for better spacing */
+        }
+
+        .sidebar .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            font-size: 1em;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .sidebar .menu-item:hover {
+            background-color: #0056b2; /* Slightly darker blue on hover */
+            color: #fff;
+        }
+
+        .sidebar .menu-item.active {
+            background-color: #0056b2; /* Active item background color */
+        }
+
+        .sidebar .menu-item i {
+            margin-right: 10px;
+        }
+
+        /* Content */
+        .content {
+            margin-left: 250px;
+            padding: 20px; /* Increased padding for better spacing */
+            flex: 1;
+        }
+
+        .dashboard-header {
+            background-color: #007bff; /* Soft blue */
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px; /* Rounded corners */
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        /* Button */
+        .btn-add {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745; /* Green */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            margin-bottom: 20px; /* Margin for spacing */
+        }
+
+        .btn-add:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff; /* White background for table */
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Clip the corners */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+
+        th, td {
+            padding: 12px 15px; /* Padding for table cells */
+            text-align: left;
+            border-bottom: 1px solid #ddd; /* Soft border for rows */
+        }
+
+        th {
+            background-color: #007bff; /* Header background color */
+            color: white; /* Header text color */
+        }
+
+        tr:hover {
+            background-color: #f1f1f1; /* Light gray on row hover */
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px; /* Space between action buttons */
+        }
+
+        .action-buttons button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-edit {
+            background-color: #ffc107; /* Yellow */
+        }
+
+        .btn-delete {
+            background-color: #dc3545; /* Red */
+        }
+
+        .btn-edit:hover {
+            background-color: #d39e00; /* Darker yellow */
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333; /* Darker red */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="img/UNPAM_logo1.png" alt="University Logo">
+            <h2>Universitas Pamulang</h2>
+        </div>
+        <div class="welcome">
+            <img src="img/razik1.jpeg" alt="Profile Picture">
+            <p>Welcome, Razik<br><small>Administrator</small></p>
+        </div>
+        <a href="index.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+        <div class="menu-heading">MENU KARYAWAN</div>
+        <a href="karyawan.html" class="menu-item">
+            <i class="fas fa-users"></i>
+            <span>Karyawan</span>
+        </a>
+        <a href="jabatan.html" class="menu-item">
+            <i class="fas fa-briefcase"></i>
+            <span>Jabatan</span>
+        </a>
+        <a href="divisi.html" class="menu-item active">
+            <i class="fas fa-sitemap"></i>
+            <span>Divisi</span>
+        </a>
+
+        <div class="menu-heading">MENU ABSENSI</div>
+        <a href="absensi.html" class="menu-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Absensi</span>
+        </a>
+        <a href="izin.html" class="menu-item">
+            <i class="fas fa-file-alt"></i>
+            <span>Izin</span>
+        </a>
+        <a href="lembur.html" class="menu-item">
+            <i class="fas fa-clock"></i>
+            <span>Lembur</span>
+        </a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1>Sistem Informasi Manajemen Divisi</h1>
+            <p>Admin Dashboard</p>
+        </div>
+
+        <!-- Add Division Button -->
+        <a href="add_divisi.html" class="btn-add">Tambah Divisi</a>
+
+        <!-- Division Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Kode Divisi</th>
+                    <th>Nama Divisi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>D001</td>
+                    <td>Keuangan</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-delete"><i class="fas fa-trash"></i> Hapus</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>D002</td>
+                    <td>SDM</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-delete"><i class="fas fa-trash"></i> Hapus</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>D003</td>
+                    <td>Pemasaran</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-delete"><i class="fas fa-trash"></i> Hapus</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>D003</td>
+                    <td>IT</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn-delete"><i class="fas fa-trash"></i> Hapus</button>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
